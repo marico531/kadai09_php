@@ -71,9 +71,9 @@ $json = json_encode($values,JSON_UNESCAPED_UNICODE);
         <tr>
           <th>ID</th>
           <th>チーム名</th>
-          <th>チームサイトURL</th>
+          <th>チームサイト</th>
           <th>メインスタジアム名</th>
-          <th>スタジアムサイトURL</th>
+          <th>スタジアムサイト</th>
           <th>備考</th>
         </tr>
       </thead>
@@ -82,9 +82,9 @@ $json = json_encode($values,JSON_UNESCAPED_UNICODE);
           <tr>
             <td><?= h($v["id"])?></td>
             <td><?= h($v["team_name"])?></td>
-            <td><?= h($v["team_url"]) ?></td>
+            <td><a href="<?= h($v["team_url"]) ?>" target="_blank"><?= h($v["team_name"]) ?> 公式サイト</a></td>
             <td><?= h($v["stadium_name"]) ?></td>
-            <td><?= h($v["stadium_url"] )?></td>
+            <td><a href="<?= h($v["stadium_url"]) ?>" target="_blank"><?= h($v["stadium_name"]) ?> 公式サイト</a></td>
             <td><?= h($v["naiyou"] )?></td>
             <!-- detail.phpに飛ばすコード -->
             <td><a href="detail.php?id=<?=h($v["id"])?>">更新</a></td>

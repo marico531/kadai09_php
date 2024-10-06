@@ -14,38 +14,27 @@ $naiyou         = $_POST["naiyou"];
 $id             = $_POST["id"];
 
 //2. DB接続します
-//*** function化する！  *****************
-include("funcs.php");// 外部ファイル読み込むためだけのコード。includeは全部の意味
+include("funcs.php"); // 外部ファイルを読み込むためのコード
 $pdo = db_conn();
 
 //３．データ登録SQL作成
-$sql="UPDATE rugby_an_db SET team_name=:team_name,eam_url=:team_url,stadium_name=:stadium_name,stadium_url=:stadium_url,naiyo=:naiyou,WHERE id=:id";
+$sql="UPDATE rugby_an_db SET team_name=:team_name, team_url=:team_url, stadium_name=:stadium_name, stadium_url=:stadium_url, naiyou=:naiyou WHERE id=:id";
 
 $stmt = $pdo->prepare($sql);
-$stmt->bindValue(':team_name',     $team_name,    PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
-$stmt->bindValue(':team_url',      $team_url,     PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
-$stmt->bindValue(':stadium_name',  $stadium_name, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
-$stmt->bindValue(':stadium_url',   $stadium_url,  PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
-$stmt->bindValue(':naiyou',        $naiyou,       PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
-$status = $stmt->execute(); // 実行　true or false
+$stmt->bindValue(':team_name',     $team_name,    PDO::PARAM_STR);  // 文字列の場合 PDO::PARAM_STR
+$stmt->bindValue(':team_url',      $team_url,     PDO::PARAM_STR);  // 文字列の場合 PDO::PARAM_STR
+$stmt->bindValue(':stadium_name',  $stadium_name, PDO::PARAM_STR);  // 文字列の場合 PDO::PARAM_STR
+$stmt->bindValue(':stadium_url',   $stadium_url,  PDO::PARAM_STR);  // 文字列の場合 PDO::PARAM_STR
+$stmt->bindValue(':naiyou',        $naiyou,       PDO::PARAM_STR);  // 文字列の場合 PDO::PARAM_STR
+$stmt->bindValue(':id',            $id,           PDO::PARAM_INT);  // 数値の場合 PDO::PARAM_INT
+$status = $stmt->execute(); // 実行 true or false
 
 //４．データ登録処理後
 if($status==false){
-    //*** function化する！*****************
-    //エラーを表示させるコード
+    // エラーを表示させるコード
     sql_error($stmt);
-
 }else{
-    //*** function化する！*****************
-    //情報をselect.phpに送るコード
-redirect("select.php");
+    // 情報をselect.phpに送るコード
+    redirect("select.php");
 }
-
-//insert.phpより 
-//2. $id = POST["id"]を追加
-//3. SQL修正
-//   "UPDATE テーブル名 SET 変更したいカラムを並べる WHERE 条件"
-//   bindValueにも「id」の項目を追加
-//4. header関数"Location"を「select.php」に変更
-
 ?>
